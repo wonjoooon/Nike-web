@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Cart</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        .content {
+            min-height: 350px;
+            text-align: center;
+        }
+
+        .cartList {
+            padding: 20px;
+        }
+
+        .cart_header {
+            text-align: center;
+        }
+        tbody {
+            width : 90%;
+        }
+        th td {
+            width: 20%;
+            height: 40px;
+        }
+        tr {
+            border-top: 1px solid #333333 ;
+            border-bottom: 1px solid #333333;
+            border-collapse: collapse;
+        }
+
+    </style>
+    <script th:inline="javascript">
+        function remove(form, e){
+            let c_id = document.getElementById("c_id");
+            c_id.value = e.value;
+
+            form.method = 'post';
+            form.action = /*[[@{/cart/remove}]]*/ "";
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+<th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+    <div class="container">
+        <div class="content">
+            <div th:if="${#strings.isEmpty(cartList)}">
+                <div>
+                    <p align="center"><b><span style="font-size: 9pt">장바구니가 비어있습니다.</span></b></p>
+                    <a href="/product/list">상품 보러가기</a>
+                </div>
+            </div>
+            <form name="cartForm" action="" method="post">
+                <input type="hidden" value="" name="c_id" id="c_id">
+            <table th:unless="${#strings.isEmpty(cartList)}" class="cartList">
+                <tr class="cart_header">
+                    <th>상품 코드</th>
+                    <th>상품명</th>
+                    <th>상품 사이즈</th>
+                    <th>상품 수량</th>
+                    <td>삭제</td>
+                </tr>
+                <tbody th:each="cart, cartStat : ${cartList}" class="cart">
+                    <tr class="cart_product">
+                        <td>[[${cart.p_code}]]</td>
+                        <td>[[${cart.p_name}]]</td>
+                        <td>[[${cart.pc_size}]]</td>
+                        <td>[[${cart.pc_quantity}]]</td>
+                        <td>
+                            <button type="button" onclick="remove(cartForm, this)" th:value="${cart.id}">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </form>
+        </div>
+
+        <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

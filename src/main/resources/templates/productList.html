@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Product List</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        body {
+            margin : 0 auto;
+        }
+        .container {
+            background-color: rgba(79,79,79,0.63);
+            margin : 0 auto;
+            width: 100%
+        }
+        .content {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .content .product {
+            margin : 0 auto;
+            text-align: center;
+        }
+        .content .product tr {
+            margin : 30px 30px;
+            text-align: center;
+        }
+        .content .product tr td {
+            background-color: white;
+            width: 700px;
+            height: 590px;
+            display: block;
+            margin : 50px;
+            text-align: center;
+        }
+        .content .product tr td .image {
+            width: 700px;
+            height: 467px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .content .product tr td .image img {
+            width: 700px;
+            height : 467px;
+        }
+        .content .product tr td .describe {
+            width: 700px;
+            height: 130px;
+            margin: 0;
+            padding: 8px;
+            text-align: left;
+            border-top : solid #969292 2px;
+        }
+        .content .product tr td .describe p {
+            font-size: small;
+            line-height: 60%;
+        }
+        .product_name {
+            font-weight: bold;
+        }
+        .product_category, .product_color {
+            color: rgba(24,24,24,0.63);
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+    <div class="container">
+        <div th:if="${#strings.isEmpty(products)}" class="content">
+            <div>
+                <p align="center"><b><span style="font-size: 9pt">상품을 찾을 수 없습니다.</span></b></p>
+            </div>
+        </div>
+
+        <table th:unless="${#strings.isEmpty(products)}" class="content">
+            <tbody th:each="product, productStat : ${products}" class="product">
+                <tr>
+                    <td>
+                        <div class="image">
+                            <a th:href="@{/product/view(p_code=${product.p_code})}" class="product_img">
+                                <img th:src="${path+product.p_img}" th:alt="${product.p_name}">
+                            </a>
+                        </div>
+                        <div class="describe">
+                            <p class="product_name">[[${product.p_name}]]</p>
+                            <p class="product_category">[[${product.p_gender}]] [[${product.p_category}]]</p>
+                            <p class="product_color">[[${product.p_color}]]</p>
+                            <h5 class="product_price">[[${product.p_price}]] 원</h5>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

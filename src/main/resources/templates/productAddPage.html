@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Add Product</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <script th:inline="javascript">
+        function backToList(form){
+            form.action = "/";
+            form.method = "get";
+            form.submit();
+        }
+        function addProduct(form){
+            form.action = /*[[@{/product/addProduct}]]*/ "";
+            form.submit();
+        }
+    </script>
+    <style>
+        .content {
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 20px;
+            padding-bottom: 100px;
+            height: 850px;
+        }
+
+        form {
+            margin: 60px auto 0;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 85%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .submit_btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit_btn:hover {
+            background-color: #333;
+        }
+
+        td {
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<!-- header -->
+<th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+<div class="content">
+    <form name="productForm" method="post" action="" th:object="${productAddForm}" enctype="multipart/form-data">
+        <div th:if="${#fields.hasAnyErrors()}" class="error">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+        </div>
+
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="p_name">상품명</label></td>
+                        <td><input type="text" id="p_name" th:field="*{p_name}"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_category">상품 카테고리</label></td>
+                        <td><input type="text" id="p_category" th:field="*{p_category}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_img">상품 이미지</label></td>
+                        <td><input type="file" id="p_img" name="p_img"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_gender">성별</label></td>
+                        <td><input type="text" id="p_gender" th:field="*{p_gender}"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_location">상품 제조 국가/지역</label></td>
+                        <td><input type="text" id="p_location" th:field="*{p_location}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_price">상품 가격</label></td>
+                        <td><input type="text" id="p_price" th:field="*{p_price}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_color">상품 색상</label></td>
+                        <td><input type="text" id="p_color" th:field="*{p_color}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_date">상품 발매일 ex)2000-00-00</label></td>
+                        <td><input type="text" id="p_date" th:field="*{p_date}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="p_description">상품 설명</label></td>
+                        <td><textarea id="p_description" th:field="*{p_description}" rows="10" cols="20"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <input type="button" value="등록" onclick="addProduct(productForm)" class="submit_btn">
+        <input type="button" value="취소" onclick="backToList(productForm)" class="submit_btn"/>
+    </form>
+    <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+</div>
+</body>
+</html>

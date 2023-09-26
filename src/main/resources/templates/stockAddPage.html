@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Stock Add Page</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        .container {
+            text-align: center;
+        }
+        .content {
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 20px;
+            padding-bottom: 100px;
+            height: 850px;
+        }
+
+        form {
+            margin: 60px auto 0;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .submit_btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit_btn:hover {
+            background-color: #333;
+        }
+
+        td {
+            line-height: 30px;
+        }
+    </style>
+
+    <script>
+        function order(){
+            let str = "상품 주문이 완료되었습니다.";
+            alert(str);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+        <h1> 상품 재고 주문</h1>
+        <div class="content">
+        <form action="/stock/add" method="post" th:object="${productCopyForm}">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <img th:src="${path+product.p_img}" th:alt="${product.p_name}" width="50%" height="50%">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="p_name">상품명 </label></td>
+                    <td><h3 id="p_name" th:text="${product.p_name}"></h3></td>
+                </tr>
+                <tr>
+                    <td><label for="p_code">상품 코드 </label></td>
+                    <td><input type="text" name="p_code" readonly id="p_code" th:field="*{p_code}" th:value="${product.p_code}"></td>
+                </tr>
+                <tr>
+                    <td><label for="pc_size">상품 사이즈 </label></td>
+                    <td>
+                        <select id="pc_size" th:field="*{pc_size}" name="pc_size">
+                            <option value="240">240</option>
+                            <option value="245">245</option>
+                            <option value="250">250</option>
+                            <option value="255">255</option>
+                            <option value="260">260</option>
+                            <option value="265">265</option>
+                            <option value="270">270</option>
+                            <option value="275">275</option>
+                            <option value="280">280</option>
+                            <option value="285">285</option>
+                            <option value="290">290</option>
+                            <option value="295">295</option>
+                            <option value="300">300</option>
+                            <option value="305">305</option>
+                            <option value="310">310</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="pc_quantity">상품 재고 주문 수량 </label></td>
+                    <td><input type="text" name="pc_quantity" id="pc_quantity" th:field="*{pc_quantity}"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="submit_btn" onclick="order()">주문</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        </div>
+        <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

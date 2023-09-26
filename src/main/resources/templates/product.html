@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Product</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        .container {
+            margin: 0 auto;
+        }
+        .head_content p {
+            font-weight: bold;
+        }
+        .head_content .head_text {
+            padding-left: 25px;
+        }
+        .head_content img {
+            width : 864px;
+            height : 576px;
+        }
+
+        .size_table {
+            padding : 10px 10px 10px 30px;
+        }
+        .size_table tr td {
+            text-align: center;
+        }
+        .size_table tr td button {
+            border-radius: 5px;
+            border: rgba(24,24,24,0.63);
+            width: 150px;
+            height: 50px;
+        }
+        .size_table tr td button:hover {
+            border : 1px solid black;
+        }
+        .size_text {
+            font-weight: bold;
+        }
+
+
+        .link_btn {
+            padding : 10px 10px 10px 30px;
+        }
+        .cart_btn, .wishlist_btn {
+            width : 767px;
+            height : 55px;
+            margin : 10px 0 10px 0;
+            color : white;
+            background-color: black;
+            font-weight: bold;
+            border-radius: 30px;
+        }
+        .cart_btn:hover, .wishlist_btn:hover {
+            opacity: 0.6;
+        }
+
+        .last_content {
+            padding : 10px 10px 10px 30px;
+        }
+
+        .selected {
+            background-color: rgba(24, 24, 24, 0.63);
+            color: white;
+        }
+    </style>
+
+    <script th:inline="javascript">
+        function cart_login(form){
+            form.action = "/cart/add";
+            form.method = 'post';
+            form.submit();
+        }
+        function cart_unLogin(form) {
+            alert('로그인 후 이용해 주세요.');
+            form.action = "/member/loginPage";
+            form.method = "get";
+            form.submit();
+        }
+        function wishlist_login(form, e) {
+            if(e.innerHTML === "위시리스트 ♡"){
+                e.innerHTML = "위시리스트 ♥";
+                // form.action = "/wishlist/add";
+                // form.method = 'post';
+                // form.submit();
+            }
+            else {
+                e.innerHTML = "위시리스트 ♡"
+                // form.action = "/wishlist/remove";
+                // form.method = 'post';
+                // form.submit();
+            }
+
+        }
+    </script>
+    <script>
+        let prev_btn = null;
+        function selectSize(e) {
+            if(prev_btn != null){
+                prev_btn.classList.remove("selected");
+            }
+            prev_btn = e;
+            let size = e.value;
+            let pc_size = document.getElementById("pc_size");
+            pc_size.value = size;
+
+            e.classList.add("selected");
+        }
+    </script>
+</head>
+<body>
+<th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+<div class="container">
+    <form action="" name="productForm">
+        <input type="hidden" th:value="${product.p_code}" name="p_code" id="p_code">
+        <input type="hidden" value="" name="pc_size" id="pc_size">
+        <input type="hidden" th:value="${product.p_name}" name="p_name" id="p_name">
+        <div class="head_content">
+            <h3 th:text="${product.p_name}" class="head_text"></h3>
+            <p class="head_text">[[${product.p_gender}]] [[${product.p_category}]]</p>
+            <h4 th:text="${product.p_price}+' 원'" class="head_text"></h4>
+
+            <img th:src="${path+product.p_img}" th:alt="${product.p_name}">
+        </div>
+
+        <div class="middle_content">
+            <table class="size_table">
+                <tr>
+                    <td><p class="size_text">사이즈 선택</p></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><p class="size_text">사이즈 가이드</p></td>
+                </tr>
+                <tr>
+                    <td><button type="button" value="240" onclick="selectSize(this)" class="size_btn">240</button></td>
+                    <td><button type="button" value="245" onclick="selectSize(this)" class="size_btn">245</button></td>
+                    <td><button type="button" value="250" onclick="selectSize(this)" class="size_btn">250</button></td>
+                    <td><button type="button" value="255" onclick="selectSize(this)" class="size_btn">255</button></td>
+                    <td><button type="button" value="260" onclick="selectSize(this)" class="size_btn">260</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" value="265" onclick="selectSize(this)" class="size_btn">265</button></td>
+                    <td><button type="button" value="270" onclick="selectSize(this)" class="size_btn">270</button></td>
+                    <td><button type="button" value="275" onclick="selectSize(this)" class="size_btn">275</button></td>
+                    <td><button type="button" value="280" onclick="selectSize(this)" class="size_btn">280</button></td>
+                    <td><button type="button" value="285" onclick="selectSize(this)" class="size_btn">285</button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" value="290" onclick="selectSize(this)" class="size_btn">290</button></td>
+                    <td><button type="button" value="295" onclick="selectSize(this)" class="size_btn">295</button></td>
+                    <td><button type="button" value="300" onclick="selectSize(this)" class="size_btn">300</button></td>
+                    <td><button type="button" value="305" onclick="selectSize(this)" class="size_btn">305</button></td>
+                    <td><button type="button" value="310" onclick="selectSize(this)" class="size_btn">310</button></td>
+                </tr>
+            </table>
+            <div class="link_btn">
+                <button sec:authorize="isAuthenticated()" type="button" onclick="cart_login(productForm)" class="cart_btn" >장바구니</button><br/>
+                <button sec:authorize="isAuthenticated()" type="button" onclick="wishlist_login(productForm, this)" class="wishlist_btn">위시리스트 ♡</button><br/>
+
+                <button sec:authorize="isAnonymous()" type="button" onclick="cart_unLogin(productForm)" class="cart_btn" >장바구니</button><br/>
+                <button sec:authorize="isAnonymous()" type="button" onclick="cart_unLogin(productForm)" class="wishlist_btn" >위시리스트 ♡</button><br/>
+            </div>
+        </div>
+
+        <div class="last_content">
+            <div th:if="${#authentication.name == 'admin'}" class="stock_add_link">
+                <a th:href="@{/stock/addPage(p_code=${product.p_code})}">상품 재고 추가</a>
+            </div>
+            <p th:text="${product.p_description}"></p>
+            <br/>
+            <ul>
+                <li>현재 컬러: [[${product.p_color}]]</li>
+                <li>스타일 번호: [[${product.p_code}]]</li>
+            </ul>
+        </div>
+    </form>
+    <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+</div>
+</body>
+</html>

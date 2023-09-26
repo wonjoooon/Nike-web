@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike - Login</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        .content {
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            height: 400px;
+        }
+
+        form {
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin: 60px auto;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+
+        table {
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        table tr {
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+<div class="content">
+    <form th:action="@{/member/login}" method="post">
+        <div th:if="${param.error}" class="error">
+            <div>
+                사용자 ID 또는 비밀번호를 확인해 주세요.
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td><label for="username">아이디</label></td>
+                <td><input type="text" name="username" id="username"></td>
+            </tr>
+            <tr>
+                <td><label for="password">비밀번호</label></td>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="로그인"/>
+    </form>
+    <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+</div>
+</body>
+</html>

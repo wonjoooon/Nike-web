@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nike. Just Do It. 나이키 코리아</title>
+    <link href="/images/nike_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <style>
+        .container {
+            text-align: center;
+        }
+        .mid_content a {
+            padding: 5px 10px 10px 5px;
+            font-size: small;
+            text-decoration: none;
+            background-color: black;
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            display: inline;
+            height: 60px;
+        }
+
+        .mid_content a:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+    <div class="container">
+        <img src="/images/mainImage.jpg" alt="MainImage">
+        <div class="mid_content">
+            <p style="font-weight: bold">나이키 클럽 플리스</p>
+            <h1 style="font-weight: bold">일상을 위한 플리스</h1>
+            <p>언제나 편하게 입을 수 있는 나이키 클럽 플리스의 다채로운 컬러와 부드러운 착용감을 경험해 보세요.</p>
+            <a href="/product/list">전체 제품 보기</a>
+        </div>
+        <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

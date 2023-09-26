@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" >
+<body>
+  <header class="header" th:fragment="headerFragment">
+    <a th:href="@{/}"><img src="/images/nike_logo.jpg" alt="nike"></a>
+    <div sec:authorize="isAuthenticated()" class="nav">
+      <p sec:authentication="name" class="welcome"></p><p class="welcome">님 환영합니다!</p>
+      <a th:href="@{/member/logout}">로그아웃</a>
+      <a href="/product/productAddPage" role="button" th:if="${#authentication.name == 'admin'}">신상품 추가</a>
+      <a th:href="@{/cart/list}">장바구니</a>
+    </div>
+    <div sec:authorize="isAnonymous()" class="nav">
+      <a th:href="@{/member/loginPage}">로그인</a>
+      <a th:href="@{/member/joinPage}">회원가입</a>
+    </div>
+    <div class="gray_part"></div>
+    <hr/>
+  </header>
+</body>
+</html>
